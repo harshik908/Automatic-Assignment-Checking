@@ -28,3 +28,52 @@ def get_code(project_name,data):
     
     os.chdir("..\\..\\..\\code")
 
+def read_outputs():
+    number_outputs=len(os.listdir("..\\test_cases\\output")))
+
+    outputs=[]
+    os.chdir("..\\test_cases\\output")
+
+    for i in range(1,number_outputs+1):
+        file_name=str(i)+".txt"
+
+        with open(file_name) as file:
+            outputs.append(file.read())
+
+    os.chdir("..\\..\\code")
+    return outputs
+
+def run_code(data,project_name,file_name,outputs):
+    number_inputs=len(os.listdir("..\\test_cases\\input"))
+    os.chdir("..\\..\\Data\\solutions\\"+project_name)
+
+    score=[]
+
+    for i in range(len(data)):
+        os.chdir(data[i][2])
+
+        for inp in range(1,number_inputs+1):
+            os.system("python"+file_name+".py"+" < ..\\..\\..\\..\\test_cases\\input\\"+str(inp)+".txt"+" > "+str(inp)+".output")
+            
+            with open(str(inp)+".output") as file:
+                if(outputs[inp-1]==file.read()):
+                    score.append(True)
+                else:
+                    score.append(False)
+
+        data[i].append(score)
+
+        #potential error
+        score.clear()
+
+        os.chdir("..")
+
+    os.chdir("..\\..\\..\\code")
+
+    return data
+
+
+
+
+            
+
